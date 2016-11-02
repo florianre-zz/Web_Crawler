@@ -13,8 +13,10 @@ class WebSpider:
         soup = BeautifulSoup(plain_text, "html.parser")
 
         for link in soup.findAll('a'):
-            href = link.get('href')
+            href = str(link.get('href'))
             # TODO: do domain
             if href not in self.visited:
-                self.visited.append(href)
+                complete_link = 'https://gocardless.com' + href if href.startswith('/') else href
+                self.visited.append(complete_link)
+        self.visited.remove('None')
         return self.visited
